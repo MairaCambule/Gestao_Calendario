@@ -1,0 +1,17 @@
+:root{ --maxw:1100px; }
+body{ font-family: Arial, Helvetica, sans-serif; margin:18px; background:#f3f4f6; color:#111; }
+.app{ max-width:var(--maxw); margin:0 auto; }
+header h1{ margin:0 0 12px 0; }
+.controls{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+.controls .types label{ margin-right:8px; font-size:14px; }
+#calendar{ background:white; border-radius:6px; padding:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+
+/* Modal simples */
+.modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.4); z-index:50; }
+.modal.hidden{ display:none; }
+.modal-content{ background:white; padding:16px; border-radius:8px; width:420px; max-width:92%; box-shadow:0 8px 30px rgba(0,0,0,0.12); }
+.modal-content label{ display:block; margin-bottom:8px; font-size:14px; }
+.modal-content input, .modal-content select{ width:100%; padding:6px 8px; margin-top:6px; box-sizing:border-box; border:1px solid #ddd; border-radius:6px; }
+.modal-actions{ display:flex; gap:8px; margin-top:12px; justify-content:flex-end; }
+button.danger{ background:#ef4444;color:white;border:none;padding:8px 10px;border-radius:6px; }
+button{ padding:6px 10px;border-radius:6px;border:1px solid #ccc;background:#fff; cursor:pointer; }

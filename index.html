@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestão de Calendário - GSI</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f8f9fa; }
+    h1 { text-align: center; margin-bottom: 8px; }
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 6px 0 16px; }
+    .legend .item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+    .legend .swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,.15); }
+
+    .wrap { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    form, .filters { display: flex; gap: 10px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 8px; }
+    form input, form select, form button, .filters select { padding: 6px 8px; }
+    #calendar { background: #fff; padding: 10px; border-radius: 8px; }
+    label { font-size: .9rem; color: #333 }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .danger { background: #ffefef; }
+    button { cursor: pointer; }
+    #deleteBtn { display: none; background: #e74c3c; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
+    #saveBtn { background: #2ecc71; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
+  </style>
+</head>
+<body>
+  <h1>Gestão de Calendário (GSI)</h1>
+
+  <!-- LEGENDA DE CORES -->
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:#3498db"></span> Teletrabalho</div>
+    <div class="item"><span class="swatch" style="background:#f39c12"></span> Formação</div>
+    <div class="item"><span class="swatch" style="background:#2ecc71"></span> Férias</div>
+    <div class="item"><span class="swatch" style="background:#9b59b6"></span> Outros</div>
+  </div>
+
+  <div class="wrap">
+    <!-- FORMULÁRIO -->
+    <form id="eventForm">
+      <div class="row">
+        <label>Tipo:</label>
+        <select id="type">
+          <option value="">-- selecione --</option>
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Colaborador:</label>
+        <select id="colaborador">
+          <option value="">-- selecione --</option>
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Início:</label>
+        <input id="startDate" type="date"/>
+      </div>
+      <div class="row">
+        <label>Fim (inclusivo):</label>
+        <input id="endDate" type="date"/>
+      </div>
+      <button id="saveBtn" type="submit">Guardar</button>
+      <button id="deleteBtn" type="button" class="danger">Apagar selecionado</button>
+    </form>
+
+    <!-- FILTROS -->
+    <div class="filters">
+      <div class="row">
+        <label>Filtro Tipo:</label>
+        <select id="filterType">
+          <option value="">Todos</option>
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Filtro Colaborador:</label>
+        <select id="filterColab">
+          <option value="">Todos</option>
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="calendar"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
