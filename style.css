@@ -1,0 +1,98 @@
+:root { --maxw: 1100px; }
+
+body { font-family: Arial, Helvetica, sans-serif; margin: 18px; background: #f3f4f6; color: #111; }
+h1 { text-align: center; margin-bottom: 8px; }
+
+.wrap { display: grid; grid-template-columns: 1fr; gap: 16px; }
+form, .filters { display: flex; gap: 10px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 8px; }
+form input, form select, form button, .filters select { padding: 6px 8px; }
+#calendar { background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+label { font-size: .9rem; color: #333 }
+.row { display: flex; align-items: center; gap: 8px; }
+
+button { cursor: pointer; }
+#deleteBtn { display: none; background: #e74c3c; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
+#saveBtn   { background: #2ecc71; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
+
+/* Legendinha (como no teu HTML inline) */
+.legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 6px 0 16px; }
+.legend .item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+.legend .swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,.15); }
+
+/*new */
+
+.home-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #1976d2;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  z-index: 9999; /* garante que fica acima do calendário */
+}
+
+.home-button:hover {
+  background-color: #145a9e;
+}
+
+/* --- Botões modernizados --- */
+button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+button:hover { transform: translateY(-1px); }
+button.danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
+button.danger:hover { filter: brightness(1.05); }
+
+/* ===== MODAL como TOOLTIP (flutuante sobre o evento) =====
+   - Não escurece o ecrã
+   - Não ocupa o ecrã inteiro
+   - Posicionamos via JS com getBoundingClientRect
+*/
+.modal.hidden { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: transparent; /* sem overlay */
+  pointer-events: none;    /* só a .modal-content recebe cliques */
+  z-index: 10000;
+}
+.modal-content {
+  position: fixed;   /* o JS coloca top/left aqui */
+  pointer-events: auto;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  border-radius: 10px;
+  padding: 12px;
+  width: 320px;
+  max-width: 92vw;
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+}
+.modal-content label { display: block; margin-bottom: 8px; font-size: 14px; }
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 6px 8px;
+  margin-top: 6px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.modal-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+.modal-content .close {
+  background: #eee;
+  border: 0;
+  border-radius: 6px;
+  padding: 4px 8px;
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Calendário - GSI</title>
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
+  <!-- O NOSSO CSS externo (evita conflitos com CSS embutido) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Gestão de Calendário (GSI)</h1>
+
+  <!-- Botão Home -->
+  <a href="https://jbispo23.github.io/home-gsi/" class="home-button" target="_self">🏠 Home</a>
+
+  <!-- LEGENDA DE CORES -->
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:#3498db"></span> Teletrabalho</div>
+    <div class="item"><span class="swatch" style="background:#f39c12"></span> Formação</div>
+    <div class="item"><span class="swatch" style="background:#2ecc71"></span> Férias</div>
+    <div class="item"><span class="swatch" style="background:#e91e63"></span> Aniversário</div>
+    <div class="item"><span class="swatch" style="background:#9c27b0"></span> Ponte</div>
+    <div class="item"><span class="swatch" style="background:#6c757d"></span> Outros</div>
+  </div>
+
+  <div class="wrap">
+    <!-- FORMULÁRIO -->
+    <form id="eventForm">
+      <div class="row">
+        <label>Tipo:</label>
+        <select id="type">
+          <option value="">-- selecione --</option>
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Aniversário">Aniversário</option>
+          <option value="Ponte">Ponte</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Colaborador:</label>
+        <select id="colaborador">
+          <option value="">-- selecione --</option>
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Início:</label>
+        <input id="startDate" type="date" />
+      </div>
+      <div class="row">
+        <label>Fim:</label>
+        <input id="endDate" type="date" />
+      </div>
+      <button id="saveBtn" type="submit">Guardar</button>
+      <button id="deleteBtn" type="button" class="danger">Apagar selecionado</button>
+    </form>
+
+    <!-- FILTROS -->
+    <div class="filters">
+      <div class="row">
+        <label>Filtro Tipo:</label>
+        <select id="filterType">
+          <option value="">Todos</option>
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Aniversário">Aniversário</option>
+          <option value="Ponte">Ponte</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Filtro Colaborador:</label>
+        <select id="filterColab">
+          <option value="">Todos</option>
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="calendar"></div>
+  </div>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+  <!-- Nosso JS -->
+  <script type="module" src="./script.js"></script>
+
+  <!-- Modal editar/remover (tooltip flutuante; começa escondido) -->
+  <div id="eventModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h3 style="margin:0;">Editar evento</h3>
+        <button class="close" aria-label="Fechar">✕</button>
+      </div>
+
+      <label>Tipo
+        <select id="modalType">
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Outros">Outros</option>
+          <option value="Aniversário">Aniversário</option>
+          <option value="Ponte">Ponte</option>
+        </select>
+      </label>
+
+      <label>Colaborador
+        <select id="modalColaborador">
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </label>
+
+      <div style="display:flex; gap:8px;">
+        <label style="flex:1;">Início
+          <input type="date" id="modalStartDate">
+        </label>
+        <label style="flex:1;">Fim (inclusivo)
+          <input type="date" id="modalEndDate">
+        </label>
+      </div>
+
+      <div class="modal-actions" style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
+        <button id="modalSave">Atualizar</button>
+        <button id="modalDelete" class="danger">Remover</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
