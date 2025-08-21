@@ -1,31 +1,110 @@
-:root { --maxw: 1100px; }
+/* === Paleta e base === */
+:root {
+  --maxw: 1100px;
+  --primaryA: #6a11cb;  /* mesma base do Exportar */
+  --primaryB: #2575fc;
+  --dangerA:  #ef4444;
+  --dangerB:  #dc2626;
+  --focus:    #60a5fa;
+  --border:   #dcdfe6;
+  --shadow:   0 10px 28px rgba(0,0,0,.18);
+
+  /* FullCalendar header lilás-azulado */
+  --fc-prim:        #7b6cff;
+  --fc-prim-hover:  #6a59ff;
+  --fc-prim-active: #5a49f2;
+}
 
 body { font-family: Arial, Helvetica, sans-serif; margin: 18px; background: #f3f4f6; color: #111; }
 h1 { text-align: center; margin-bottom: 8px; }
 
-.wrap { display: grid; grid-template-columns: 1fr; gap: 16px; }
-form, .filters { display: flex; gap: 10px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 8px; }
-form input, form select, form button, .filters select { padding: 6px 8px; }
-#calendar { background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-label { font-size: .9rem; color: #333 }
-.row { display: flex; align-items: center; gap: 8px; }
-
-button { cursor: pointer; }
-#deleteBtn { display: none; background: #e74c3c; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
-#saveBtn   { background: #2ecc71; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; }
-
-/* Legendinha (como no teu HTML inline) */
 .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 6px 0 16px; }
 .legend .item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
 .legend .swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,.15); }
 
-/*new */
+.filters { display:flex; gap:10px; flex-wrap:wrap; background:#fff; padding:10px; border-radius:8px; align-items:center; justify-content:center; }
+.filters .row { display:flex; align-items:center; gap:8px; }
+.filters select { padding:8px 10px; border:1px solid var(--border); border-radius:10px; }
+
+#exportBtn {
+  padding:10px 16px; border-radius:10px; border:none;
+  background: linear-gradient(135deg, var(--primaryA), var(--primaryB));
+  color:#fff; font-weight:700; cursor:pointer; box-shadow:0 3px 6px rgba(0,0,0,.2); transition:.25s;
+}
+#exportBtn:hover { transform: translateY(-1px); }
+
+#calendar { background: #fff; padding: 10px; border-radius: 8px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+
+/* === Botões globais (tooltips) === */
+button { cursor:pointer; transition:.25s; }
+.btn { padding:10px 14px; border:none; border-radius:10px; font-weight:700; box-shadow:0 3px 6px rgba(0,0,0,.18); }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: linear-gradient(135deg, var(--primaryA), var(--primaryB)); color:#fff; }
+.btn-danger  { background: linear-gradient(135deg, var(--dangerA), var(--dangerB)); color:#fff; }
+
+/* === Inputs/Select/Texto === */
+.input, .select, .textarea {
+  width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:10px;
+  outline:none; transition:border-color .2s, box-shadow .2s; background:#fff;
+}
+.input:focus, .select:focus, .textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+}
+
+/* === Tooltip (modal flutuante) === */
+.modal.hidden { display:none; }
+.modal {
+  position: fixed; inset: 0; z-index: 10000;
+  background: transparent;          /* sem overlay */
+  pointer-events: none;             /* só a caixinha recebe cliques */
+}
+.modal-content {
+  position: fixed; pointer-events: auto; background:#fff;
+  border:1px solid var(--border); border-radius:14px; padding:14px; width:380px; max-width:92vw;
+  box-shadow: var(--shadow);
+  max-height: 78vh;                 /* conteúdo rolável */
+  overflow:auto;
+}
+.modal-content h3 { font-size:16px; margin:0 0 6px; }
+.modal-content label { display:block; margin-bottom:10px; font-size:14px; }
+.modal-content .row { display:flex; align-items:center; gap:10px; }
+.grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:30px; }
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+
+/* Botão X */
+.modal-content .close {
+  background:#eef2ff; color:#1e293b; border:1px solid var(--border);
+  border-radius:8px; padding:4px 10px; font-weight:700;
+}
+.modal-content .close:hover { filter: brightness(1.03); }
+
+/* === FullCalendar toolbar: lilás-azulado === */
+.fc .fc-toolbar-chunk .fc-button {
+  border-radius: 10px;
+  border: none;
+  background: var(--fc-prim);
+  color: #fff;
+  padding: 6px 12px;
+}
+.fc .fc-toolbar-chunk .fc-button:hover {
+  background: var(--fc-prim-hover);
+}
+.fc .fc-toolbar-chunk .fc-button:focus,
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background: var(--fc-prim-active);
+  box-shadow: none;
+}
+.fc .fc-today-button { background: var(--fc-prim); color:#fff; }
+.fc .fc-prev-button, .fc .fc-next-button { background: var(--fc-prim); }
+.fc .fc-prev-button:hover, .fc .fc-next-button:hover { background: var(--fc-prim-hover); }
+
 
 .home-button {
-  position: absolute;
+  position: absolute;      /* mantém fixo no ecrã */
   top: 15px;
   right: 15px;
-  background-color: #1976d2;
+  background-color:  #7b6cff;
   color: white;
   padding: 10px 16px;
   border-radius: 8px;
@@ -34,65 +113,54 @@ button { cursor: pointer; }
   transition: background-color 0.3s;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   font-family: Arial, sans-serif;
-  z-index: 9999; /* garante que fica acima do calendário */
+  z-index: 9999;        /* garante que fica por cima do calendário */
 }
 
 .home-button:hover {
-  background-color: #145a9e;
+  background-color: #6a59ff;
 }
 
-/* --- Botões modernizados --- */
-button {
+/* --- Mini-modal escolher deleção --- */
+#deleteDialog .modal-content {
+  width: 420px;
+  max-width: 92%;
+}
+
+/* botões coerentes com o teu tema */
+#btnDelOne{
   padding: 8px 14px;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  color: white;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* lilás-azulado */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .25s;
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
 }
-button:hover { transform: translateY(-1px); }
-button.danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
-button.danger:hover { filter: brightness(1.05); }
+#btnDelCancel {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #474747, #cad0da); /* lilás-azulado */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .25s;
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
+}
 
-/* ===== MODAL como TOOLTIP (flutuante sobre o evento) =====
-   - Não escurece o ecrã
-   - Não ocupa o ecrã inteiro
-   - Posicionamos via JS com getBoundingClientRect
-*/
-.modal.hidden { display: none; }
-.modal {
-  position: fixed;
-  inset: 0;
-  background: transparent; /* sem overlay */
-  pointer-events: none;    /* só a .modal-content recebe cliques */
-  z-index: 10000;
-}
-.modal-content {
-  position: fixed;   /* o JS coloca top/left aqui */
-  pointer-events: auto;
-  background: #fff;
-  border: 1px solid #dcdfe6;
-  border-radius: 10px;
-  padding: 12px;
-  width: 320px;
-  max-width: 92vw;
-  box-shadow: 0 10px 28px rgba(0,0,0,.18);
-}
-.modal-content label { display: block; margin-bottom: 8px; font-size: 14px; }
-.modal-content input, .modal-content select {
-  width: 100%;
-  padding: 6px 8px;
-  margin-top: 6px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-.modal-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
-.modal-content .close {
-  background: #eee;
-  border: 0;
-  border-radius: 6px;
-  padding: 4px 8px;
-}
+#btnDelOne:hover, #btnDelCancel:hover { transform: translateY(-1px); }
+
+/* o danger tu já tem, mas garantimos contraste */
+#btnDelAll.danger { 
+    padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #d63c3c, #700710); /* lilás-azulado */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .25s;
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
+   }

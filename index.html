@@ -9,15 +9,12 @@
   <!-- FullCalendar CSS -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 
-  <!-- O NOSSO CSS externo (evita conflitos com CSS embutido) -->
+  <!-- Nosso CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <h1>Gestão de Calendário (GSI)</h1>
-
-  <!-- Botão Home -->
-  <a href="https://jbispo23.github.io/home-gsi/" class="home-button" target="_self">🏠 Home</a>
 
   <!-- LEGENDA DE CORES -->
   <div class="legend">
@@ -29,90 +26,59 @@
     <div class="item"><span class="swatch" style="background:#6c757d"></span> Outros</div>
   </div>
 
-  <div class="wrap">
-    <!-- FORMULÁRIO -->
-    <form id="eventForm">
-      <div class="row">
-        <label>Tipo:</label>
-        <select id="type">
-          <option value="">-- selecione --</option>
-          <option value="Teletrabalho">Teletrabalho</option>
-          <option value="Formação">Formação</option>
-          <option value="Férias">Férias</option>
-          <option value="Aniversário">Aniversário</option>
-          <option value="Ponte">Ponte</option>
-          <option value="Outros">Outros</option>
-        </select>
-      </div>
-      <div class="row">
-        <label>Colaborador:</label>
-        <select id="colaborador">
-          <option value="">-- selecione --</option>
-          <option value="Maira">Maira</option>
-          <option value="Joyce">Joyce</option>
-          <option value="Esther">Esther</option>
-          <option value="Fabiano">Fabiano</option>
-          <option value="Todos">Todos</option>
-        </select>
-      </div>
-      <div class="row">
-        <label>Início:</label>
-        <input id="startDate" type="date" />
-      </div>
-      <div class="row">
-        <label>Fim:</label>
-        <input id="endDate" type="date" />
-      </div>
-      <button id="saveBtn" type="submit">Guardar</button>
-      <button id="deleteBtn" type="button" class="danger">Apagar selecionado</button>
-    </form>
-
-    <!-- FILTROS -->
-    <div class="filters">
-      <div class="row">
-        <label>Filtro Tipo:</label>
-        <select id="filterType">
-          <option value="">Todos</option>
-          <option value="Teletrabalho">Teletrabalho</option>
-          <option value="Formação">Formação</option>
-          <option value="Férias">Férias</option>
-          <option value="Aniversário">Aniversário</option>
-          <option value="Ponte">Ponte</option>
-          <option value="Outros">Outros</option>
-        </select>
-      </div>
-      <div class="row">
-        <label>Filtro Colaborador:</label>
-        <select id="filterColab">
-          <option value="">Todos</option>
-          <option value="Maira">Maira</option>
-          <option value="Joyce">Joyce</option>
-          <option value="Esther">Esther</option>
-          <option value="Fabiano">Fabiano</option>
-          <option value="Todos">Todos</option>
-        </select>
-      </div>
+  <!-- FILTROS + EXPORT -->
+  <div class="filters">
+    <div class="row">
+      <label>Filtro Tipo:</label>
+      <select id="filterType">
+        <option value="">Todos</option>
+        <option value="Teletrabalho">Teletrabalho</option>
+        <option value="Formação">Formação</option>
+        <option value="Férias">Férias</option>
+        <option value="Aniversário">Aniversário</option>
+        <option value="Ponte">Ponte</option>
+        <option value="Outros">Outros</option>
+      </select>
     </div>
-
-    <div id="calendar"></div>
+    <div class="row">
+      <label>Filtro Colaborador:</label>
+      <select id="filterColab">
+        <option value="">Todos</option>
+        <option value="Maira">Maira</option>
+        <option value="Joyce">Joyce</option>
+        <option value="Esther">Esther</option>
+        <option value="Fabiano">Fabiano</option>
+        <option value="Todos">Todos</option>
+      </select>
+    </div>
+    <button id="exportBtn">Exportar PDF (vista atual)</button>
   </div>
+
+  <a href="https://jbispo23.github.io/home-gsi/" class="home-button" target="_self">🏠 Home</a>
+
+  <!-- CALENDÁRIO -->
+  <div id="calendar"></div>
 
   <!-- FullCalendar JS -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
+  <!-- PDF libs -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
   <!-- Nosso JS -->
   <script type="module" src="./script.js"></script>
 
-  <!-- Modal editar/remover (tooltip flutuante; começa escondido) -->
+  <!-- EDITAR (tooltip) -->
   <div id="eventModal" class="modal hidden" aria-hidden="true">
     <div class="modal-content">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <h3 style="margin:0;">Editar evento</h3>
+        <h3>Editar evento</h3>
         <button class="close" aria-label="Fechar">✕</button>
       </div>
 
       <label>Tipo
-        <select id="modalType">
+        <select id="modalType" class="select">
           <option value="Teletrabalho">Teletrabalho</option>
           <option value="Formação">Formação</option>
           <option value="Férias">Férias</option>
@@ -123,7 +89,7 @@
       </label>
 
       <label>Colaborador
-        <select id="modalColaborador">
+        <select id="modalColaborador" class="select">
           <option value="Maira">Maira</option>
           <option value="Joyce">Joyce</option>
           <option value="Esther">Esther</option>
@@ -132,21 +98,150 @@
         </select>
       </label>
 
-      <div style="display:flex; gap:8px;">
-        <label style="flex:1;">Início
-          <input type="date" id="modalStartDate">
+      <label>Descrição
+        <textarea id="modalDesc" rows="2" class="textarea" placeholder="(opcional)"></textarea>
+      </label>
+
+      <div class="row">
+        <label><input type="checkbox" id="modalAllDay" checked> Dia inteiro</label>
+      </div>
+
+      <div class="grid2">
+        <label>Início (data)
+          <input type="date" id="modalStartDate" class="input">
         </label>
-        <label style="flex:1;">Fim (inclusivo)
-          <input type="date" id="modalEndDate">
+        <label>Fim (inclusivo)
+          <input type="date" id="modalEndDate" class="input">
         </label>
       </div>
 
-      <div class="modal-actions" style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
-        <button id="modalSave">Atualizar</button>
-        <button id="modalDelete" class="danger">Remover</button>
+      <div class="grid2">
+        <label>Hora início
+          <input type="time" id="modalStartTime" class="input" disabled>
+        </label>
+        <label>Hora fim
+          <input type="time" id="modalEndTime" class="input" disabled>
+        </label>
+      </div>
+
+      <div class="grid2">
+        <label>Repetir
+          <select id="modalRepeat" class="select">
+            <option value="none">Nenhum</option>
+            <option value="weekly">Semanalmente</option>
+            <option value="monthly">Mensalmente</option>
+            <option value="yearly">Anualmente</option>
+          </select>
+        </label>
+        <label>Até (data)
+          <input type="date" id="modalRepeatUntil" class="input">
+        </label>
+      </div>
+      <div class="row">
+        <label><input type="checkbox" id="modalApplySeries"> Aplicar à série inteira</label>
+      </div>
+
+      <div class="modal-actions">
+        <button id="modalSave" class="btn btn-primary">Atualizar</button>
+        <button id="modalDelete" class="btn btn-danger">Remover</button>
       </div>
     </div>
   </div>
+
+  <!-- CRIAR (tooltip) -->
+  <div id="createModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h3>Novo evento</h3>
+        <button class="close" aria-label="Fechar">✕</button>
+      </div>
+
+      <label>Tipo
+        <select id="createType" class="select">
+          <option value="">-- selecione --</option>
+          <option value="Teletrabalho">Teletrabalho</option>
+          <option value="Formação">Formação</option>
+          <option value="Férias">Férias</option>
+          <option value="Aniversário">Aniversário</option>
+          <option value="Ponte">Ponte</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </label>
+
+      <label>Colaborador
+        <select id="createColaborador" class="select">
+          <option value="">-- selecione --</option>
+          <option value="Maira">Maira</option>
+          <option value="Joyce">Joyce</option>
+          <option value="Esther">Esther</option>
+          <option value="Fabiano">Fabiano</option>
+          <option value="Todos">Todos</option>
+        </select>
+      </label>
+
+      <label>Descrição
+        <textarea id="createDesc" rows="2" class="textarea" placeholder="(opcional)"></textarea>
+      </label>
+
+      <div class="row">
+        <label><input type="checkbox" id="createAllDay" checked> Dia inteiro</label>
+      </div>
+
+      <div class="grid2">
+        <label>Início (data)
+          <input type="date" id="createStartDate" class="input">
+        </label>
+        <label>Fim (inclusivo)
+          <input type="date" id="createEndDate" class="input">
+        </label>
+      </div>
+
+      <div class="grid2">
+        <label>Hora início
+          <input type="time" id="createStartTime" class="input" disabled>
+        </label>
+        <label>Hora fim
+          <input type="time" id="createEndTime" class="input" disabled>
+        </label>
+      </div>
+
+      <div class="grid2">
+        <label>Repetir
+          <select id="createRepeat" class="select">
+            <option value="none">Nenhum</option>
+            <option value="weekly">Semanalmente</option>
+            <option value="monthly">Mensalmente</option>
+            <option value="yearly">Anualmente</option>
+          </select>
+        </label>
+        <label>Até (data)
+          <input type="date" id="createRepeatUntil" class="input">
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button id="createSave" class="btn btn-primary">Criar</button>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- Mini-modal: escolher o que apagar -->
+  <div id="deleteDialog" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" style="max-width:420px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 style="margin:0;">Apagar evento</h3>
+        <button class="close" aria-label="Fechar" id="deleteDialogClose">✕</button>
+      </div>
+      <p style="margin:0 0 12px 0; color:#444;">Escolha o que pretende apagar:</p>
+      <div class="modal-actions" style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
+        <button id="btnDelAll" class="danger">Apagar toda a série</button>
+        <button id="btnDelOne">Apagar só esta</button>
+        <button id="btnDelCancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
