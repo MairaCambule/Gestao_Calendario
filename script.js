@@ -7,13 +7,16 @@ import {
 
 // Config do teu projeto
 const firebaseConfig = {
-  apiKey: "AIzaSyC2gjkvXkoyvzndCYB3M0UarklUiXchX9w",
-  authDomain: "gestao-calendario.firebaseapp.com",
-  projectId: "gestao-calendario",
-  storageBucket: "gestao-calendario.firebasestorage.app",
-  messagingSenderId: "1055325913959",
-  appId: "1:1055325913959:web:7e6280794536b9a22e65c2"
+    apiKey: "AIzaSyAnmz2gizhBrcpLjG5621R5S1W-LijH_Og",
+    authDomain: "gestao-calendario-d946b.firebaseapp.com",
+    projectId: "gestao-calendario-d946b",
+    storageBucket: "gestao-calendario-d946b.firebasestorage.app",
+    messagingSenderId: "519300088400",
+    appId: "1:519300088400:web:31d9516e869164d5b94755",
 };
+
+
+
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 const eventsCol = collection(db, "events");
