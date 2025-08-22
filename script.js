@@ -455,34 +455,40 @@ function init(){
   });
 
   cSave.addEventListener("click", async ()=>{
-    const type = cType.value, col = cCol.value, desc = cDesc.value;
-    const allD = cAllD.checked;
-    const sY = cSD.value, eY = cED.value || sY;
-    if (!type || !col || !sY){ alert("Preencha tipo, colaborador e data de início."); return; }
+  const type = cType.value, col = cCol.value, desc = cDesc.value;
+  const allD = cAllD.checked;
+  const sY = cSD.value, eY = cED.value || sY;
+  if (!type || !col || !sY){ 
+    alert("Preencha tipo, colaborador e data de início."); 
+    return; 
+  }
 
-    const freq = cRep.value, until = cUntil.value;
-    const hasRepeat = freq !== "none" && until;
+  const freq = cRep.value, until = cUntil.value;
+  const hasRepeat = freq !== "none" && until;
+  const sid = hasRepeat ? uuid() : null;
 
-    const sid = hasRepeat ? uuid() : null;
-    const occurrences = iterateRecurrences({
-      startYMD: sY, endYMD: eY,
-      startHM: cST.value || "00:00",
-      endHM:   cET.value || (cST.value || "00:00"),
-      allDay: allD, freq, untilYMD: until
-    });
-
-    for (const occ of occurrences){
-      const title = `${type} - ${col}`;
-      if (occ.allDay){
-        await createEventDoc({ title, type, colaborador: col, desc, allDay: true,
-          startISOorYMD: occ.startYMD, endISOorYMD: occ.endYMD, seriesId: sid });
-      } else {
-        await createEventDoc({ title, type, colaborador: col, desc, allDay: false,
-          startISOorYMD: occ.startISO, endISOorYMD: occ.endISO, seriesId: sid });
-      }
-    }
-    closeCreate();
+  const occurrences = iterateRecurrences({
+    startYMD: sY, endYMD: eY,
+    startHM: cST.value || "00:00",
+    endHM:   cET.value || (cST.value || "00:00"),
+    allDay: allD, freq, untilYMD: until
   });
+
+  for (const occ of occurrences){
+    const title = `${type} - ${col}`;
+    if (occ.allDay){
+      await createEventDoc({ title, type, colaborador: col, desc, allDay: true,
+        startISOorYMD: occ.startYMD, endISOorYMD: occ.endYMD, seriesId: sid });
+    } else {
+      await createEventDoc({ title, type, colaborador: col, desc, allDay: false,
+        startISOorYMD: occ.startISO, endISOorYMD: occ.endISO, seriesId: sid });
+    }
+  }
+
+  // ✅ fecha o modal imediatamente após criar
+  closeCreate();
+});
+
 
   // ====== EDITAR (tooltip) ======
   function closeEdit(){
