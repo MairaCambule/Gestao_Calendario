@@ -28,6 +28,7 @@ const TYPE_COLORS = {
   "Férias": "#2ecc71",
   "Aniversário": "#e91e63",
   "Ponte": "#9c27b0",
+  "Feriado": "#f1c40f",
   "Outros": "#6c757d"
 };
 
